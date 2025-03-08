@@ -30,8 +30,8 @@
             overflow-x: hidden; /* Prevents horizontal overflow */
         }
         .container { 
-            width: 100%; /* Full width for mobile, scales up on desktop */
-            max-width: 1170px; /* Bootstrap-like max width for larger screens */
+            width: 100%; 
+            max-width: 1170px; 
             margin: 0 auto; 
             padding: 15px; 
         }
@@ -50,7 +50,7 @@
         .button:hover { background: #555; }
         footer { 
             background: black; 
-            padding: 30px 20px; /* Reduced padding for mobile */
+            padding: 30px 20px; 
             color: white; 
         }
         header { 
@@ -110,7 +110,7 @@
             color: white !important; 
         }
         .flexslider { 
-            max-width: 100%; /* Full width on mobile */
+            max-width: 100%; 
             width: 100%; 
             margin: 0 auto; 
             border: 2px solid black; 
@@ -118,7 +118,7 @@
         }
         .flexslider .slides img { 
             width: 100%; 
-            height: auto; /* Removed fixed height to scale with width */
+            height: auto; 
             object-fit: cover; 
             object-position: center; 
         }
@@ -132,11 +132,11 @@
         /* Media Queries for Mobile Responsiveness */
         @media (max-width: 768px) {
             .container { padding: 10px; }
-            .header-title { font-size: 36px; } /* Reduce title size */
+            .header-title { font-size: 36px; }
             .callout h5 { font-size: 18px; }
             .callout h6 { font-size: 14px; }
-            .col-sm-6 { width: 100%; } /* Stack columns vertically */
-            .flexslider .slides img { height: 300px; } /* Adjusted height for mobile */
+            .col-sm-6 { width: 100%; }
+            .flexslider .slides img { height: 300px; }
             footer { padding: 20px 10px; }
         }
 
@@ -144,7 +144,7 @@
             .header-title { font-size: 28px; }
             .callout h5 { font-size: 16px; }
             .callout h6 { font-size: 12px; }
-            .flexslider .slides img { height: 200px; } /* Further reduced for small screens */
+            .flexslider .slides img { height: 200px; }
         }
     </style>
 
@@ -154,9 +154,12 @@
                 animation: "slide",
                 controlNav: true,
                 directionNav: true,
-                slideshowSpeed: 5000, /* Optional: Adjust slideshow speed */
-                itemWidth: 100, /* Ensures flexibility */
-                itemMargin: 0
+                slideshowSpeed: 5000,
+                animationSpeed: 600,
+                itemWidth: 0, /* Set to 0 to force single slide */
+                minItems: 1, /* Ensure at least 1 item */
+                maxItems: 1, /* Limit to 1 item at a time */
+                move: 1 /* Move 1 slide at a time */
             });
         });
         $(window).scroll(function() {
