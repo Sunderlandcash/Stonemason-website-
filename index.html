@@ -119,13 +119,20 @@
             overflow: hidden; 
         }
         .flexslider .slides { 
-            padding-top: 70px; /* Offset content to avoid header overlap */
+            /* Removed padding-top; using a pseudo-element instead */
         }
         .flexslider .slides img { 
             width: 100%; 
             height: auto; 
             object-fit: cover; 
             object-position: center; 
+        }
+        .flexslider:before { 
+            content: ""; 
+            display: block; 
+            height: 70px; /* Matches header height with extra clearance */
+            width: 100%; 
+            background: transparent; 
         }
         .img-responsive { 
             transition: transform 0.3s ease; 
@@ -141,22 +148,22 @@
             .callout h5 { font-size: 18px; }
             .callout h6 { font-size: 14px; }
             .col-sm-6 { width: 100%; }
-            .flexslider .slides { padding-top: 70px; } /* Adjust for mobile header */
             .flexslider .slides img { height: 300px; }
             footer { padding: 20px 10px; }
             header { height: 60px; }
+            .flexslider:before { height: 70px; } /* Consistent with header height */
         }
 
         @media (max-width: 480px) {
             .header-title { font-size: 28px; }
             .callout h5 { font-size: 16px; }
             .callout h6 { font-size: 12px; }
-            .flexslider .slides { padding-top: 60px; } /* Adjust for smaller header */
             .flexslider .slides img { height: 200px; }
+            .flexslider:before { height: 60px; } /* Adjust for smaller header */
         }
 
         @media (min-width: 769px) {
-            .flexslider .slides { padding-top: 0; } /* No offset needed on desktop */
+            .flexslider:before { display: none; } /* No spacer needed on desktop */
         }
     </style>
 
