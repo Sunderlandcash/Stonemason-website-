@@ -61,6 +61,7 @@
             z-index: 1000; 
             padding: 10px 15px; 
             transition: background 0.3s; 
+            height: 60px; /* Define a fixed height for consistency */
         }
         .header-nav { 
             float: right; 
@@ -79,6 +80,7 @@
             display: inline-block; 
             padding: 5px 15px; 
             transition: color 0.3s ease; 
+            line-height: 1; /* Tighten vertical alignment */
         }
         .header-title:hover { 
             color: #d3d3d3; 
@@ -115,6 +117,8 @@
             margin: 0 auto; 
             border: 2px solid black; 
             overflow: hidden; 
+            /* Add margin-top to offset the fixed header on mobile */
+            margin-top: 70px; /* Slightly more than header height to ensure clearance */
         }
         .flexslider .slides img { 
             width: 100%; 
@@ -138,6 +142,8 @@
             .col-sm-6 { width: 100%; }
             .flexslider .slides img { height: 300px; }
             footer { padding: 20px 10px; }
+            /* Ensure margin-top adjusts for mobile header height */
+            .flexslider { margin-top: 70px; } /* Consistent with header height */
         }
 
         @media (max-width: 480px) {
@@ -145,6 +151,12 @@
             .callout h5 { font-size: 16px; }
             .callout h6 { font-size: 12px; }
             .flexslider .slides img { height: 200px; }
+            .flexslider { margin-top: 60px; } /* Adjust for smaller screens */
+        }
+
+        /* Desktop-specific adjustment to remove margin if needed */
+        @media (min-width: 769px) {
+            .flexslider { margin-top: 0; } /* No offset needed on desktop */
         }
     </style>
 
@@ -156,10 +168,10 @@
                 directionNav: true,
                 slideshowSpeed: 5000,
                 animationSpeed: 600,
-                itemWidth: 0, /* Set to 0 to force single slide */
-                minItems: 1, /* Ensure at least 1 item */
-                maxItems: 1, /* Limit to 1 item at a time */
-                move: 1 /* Move 1 slide at a time */
+                itemWidth: 0,
+                minItems: 1,
+                maxItems: 1,
+                move: 1
             });
         });
         $(window).scroll(function() {
