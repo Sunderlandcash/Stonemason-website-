@@ -136,23 +136,25 @@
             font-size: 14px; 
             color: #ccc; 
         }
-        /* Expanded Image Styles */
-        .expanded { 
-            position: fixed !important; 
-            top: 0 !important; 
-            left: 0 !important; 
-            width: 100% !important; 
-            height: 100% !important; 
-            max-height: none !important; 
-            z-index: 2000; 
-            background: rgba(0, 0, 0, 0.9); /* Dark overlay */
-            object-fit: contain; /* Maintain aspect ratio */
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
+        /* Expanded Image Overlay */
+        #image-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
         }
-        .expanded + h3, .expanded + p { 
-            display: none; /* Hide text when expanded */
+        #expanded-image {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            cursor: pointer;
         }
 
         /* Media Queries for Mobile Responsiveness */
@@ -165,11 +167,7 @@
             .portfolio-item img { max-height: 200px; } /* Reduced max-height for mobile */
             .portfolio-item h3 { font-size: 18px; }
             .portfolio-item p { font-size: 12px; }
-            .expanded { 
-                width: 100% !important; 
-                height: auto !important; 
-                max-height: 100vh; /* Full viewport height on mobile */
-            }
+            #expanded-image { max-width: 95%; max-height: 80vh; } /* Adjusted for mobile */
             header { height: 60px; }
         }
 
@@ -180,7 +178,7 @@
             .portfolio-item img { max-height: 150px; } /* Further reduced for very small screens */
             .portfolio-item h3 { font-size: 16px; }
             .portfolio-item p { font-size: 12px; }
-            .expanded { max-height: 100vh; } /* Ensure full height on very small screens */
+            #expanded-image { max-width: 95%; max-height: 70vh; } /* Further adjusted for small screens */
         }
     </style>
 
@@ -216,44 +214,22 @@
             $(window).trigger('scroll');
 
             // Image expansion functionality
-            let currentExpanded = null;
+            const overlay = $('<div id="image-overlay"></div>').appendTo('body');
+            const expandedImage = $('<img id="expanded-image">').appendTo(overlay);
 
             $('.portfolio-item img').on('click', function() {
-                // If there's a currently expanded image, revert it
-                if (currentExpanded && currentExpanded !== this) {
-                    $(currentExpanded).removeClass('expanded');
-                    $(currentExpanded).nextAll('h3').show(); // Show hidden text
-                    $(currentExpanded).nextAll('p').show(); // Show hidden text
-                }
-
-                // Toggle the clicked image
-                $(this).toggleClass('expanded');
-                if ($(this).hasClass('expanded')) {
-                    currentExpanded = this;
-                    $(this).nextAll('h3').hide(); // Hide text when expanded
-                    $(this).nextAll('p').hide(); // Hide text when expanded
-                } else {
-                    currentExpanded = null;
-                    $(this).nextAll('h3').show(); // Show text when collapsed
-                    $(this).nextAll('p').show(); // Show text when collapsed
-                }
-
-                // Prevent body scrolling when image is expanded
-                if ($(this).hasClass('expanded')) {
-                    $('body').css('overflow', 'hidden');
-                } else {
-                    $('body').css('overflow', 'auto');
-                }
+                const src = $(this).attr('src');
+                const alt = $(this).attr('alt');
+                expandedImage.attr('src', src).attr('alt', alt);
+                overlay.fadeIn(300); // Smooth transition
+                $('body').css('overflow', 'hidden'); // Prevent scrolling
             });
 
-            // Close expanded image if clicked again or outside (optional)
-            $(document).on('click', function(e) {
-                if ($(e.target).hasClass('expanded')) {
-                    $(e.target).removeClass('expanded');
-                    $(e.target).nextAll('h3').show();
-                    $(e.target).nextAll('p').show();
-                    currentExpanded = null;
-                    $('body').css('overflow', 'auto');
+            // Close overlay when clicking the image or outside
+            overlay.on('click', function(e) {
+                if (e.target === this || e.target === expandedImage[0]) {
+                    overlay.fadeOut(300);
+                    $('body').css('overflow', 'auto'); // Restore scrolling
                 }
             });
         });
