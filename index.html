@@ -119,7 +119,7 @@
             overflow: hidden; 
         }
         .flexslider .slides { 
-            /* Removed padding-top; using a pseudo-element instead */
+            /* No padding or spacer; images start at top */
         }
         .flexslider .slides img { 
             width: 100%; 
@@ -127,18 +127,17 @@
             object-fit: cover; 
             object-position: center; 
         }
-        .flexslider:before { 
-            content: ""; 
-            display: block; 
-            height: 70px; /* Matches header height with extra clearance */
-            width: 100%; 
-            background: transparent; 
-        }
         .img-responsive { 
             transition: transform 0.3s ease; 
         }
         .img-responsive:hover { 
             transform: scale(1.05); 
+        }
+
+        /* Smaller text for Portfolio and Services headings */
+        article h1 {
+            font-size: 24px; /* Reduced from default (likely 32px or larger) */
+            margin: 10px 0;
         }
 
         /* Media Queries for Mobile Responsiveness */
@@ -151,7 +150,11 @@
             .flexslider .slides img { height: 300px; }
             footer { padding: 20px 10px; }
             header { height: 60px; }
-            .flexslider:before { height: 70px; } /* Consistent with header height */
+            article h1 { font-size: 20px; } /* Smaller on mobile */
+        }
+
+        @media (min-width: 769px) {
+            article h1 { font-size: 28px; } /* Slightly larger on desktop */
         }
 
         @media (max-width: 480px) {
@@ -159,11 +162,7 @@
             .callout h5 { font-size: 16px; }
             .callout h6 { font-size: 12px; }
             .flexslider .slides img { height: 200px; }
-            .flexslider:before { height: 60px; } /* Adjust for smaller header */
-        }
-
-        @media (min-width: 769px) {
-            .flexslider:before { display: none; } /* No spacer needed on desktop */
+            article h1 { font-size: 18px; } /* Even smaller on very small screens */
         }
     </style>
 
