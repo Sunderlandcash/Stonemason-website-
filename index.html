@@ -71,7 +71,7 @@
             position: absolute; 
             left: 50%; 
             transform: translateX(-50%); 
-            font-family: 'Great Vibes', cursive; 
+            font-family: 'Great+Vibes', cursive; 
             font-size: 54px; 
             color: white; 
             margin: 0; 
@@ -124,9 +124,9 @@
         }
         .flexslider .slides img { 
             width: 100%; 
-            height: auto; /* Let the image scale naturally */
-            object-fit: contain; /* Show the entire image without cropping */
-            object-position: top; /* Ensure top alignment */
+            height: auto; 
+            object-fit: cover; 
+            object-position: top; /* Prioritize showing the top of the image */
         }
         .img-responsive { 
             transition: transform 0.3s ease; 
@@ -149,9 +149,8 @@
             .callout h6 { font-size: 14px; }
             .col-sm-6 { width: 100%; }
             .flexslider .slides img { 
-                max-height: 450px; /* Allow enough height to fit whole image */
-                object-fit: contain;
-                object-position: top;
+                height: auto; /* Removed fixed height to fit full image */
+                min-height: 300px; /* Minimum height to ensure visibility */
             }
             footer { padding: 20px 10px; }
             header { height: 60px; }
@@ -163,17 +162,16 @@
             .callout h5 { font-size: 16px; }
             .callout h6 { font-size: 12px; }
             .flexslider .slides img { 
-                max-height: 300px; /* Smaller max height for very small screens */
-                object-fit: contain;
-                object-position: top;
+                height: auto; /* Removed fixed height */
+                min-height: 200px; /* Minimum height for very small screens */
             }
             article h1 { font-size: 18px; }
         }
 
         @media (min-width: 769px) {
             .flexslider .slides img { 
-                max-height: 800px; /* Larger max height for desktop */
-                object-fit: contain;
+                height: 600px; /* Larger height for desktop */
+                object-fit: cover;
                 object-position: top;
             }
             article h1 { font-size: 28px; }
