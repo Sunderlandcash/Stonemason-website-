@@ -117,15 +117,16 @@
             margin: 0 auto; 
             border: 2px solid black; 
             overflow: hidden; 
+            position: relative;
         }
         .flexslider .slides { 
-            /* No padding or spacer; images start at top */
+            /* No padding; images start at top */
         }
         .flexslider .slides img { 
             width: 100%; 
             height: auto; 
             object-fit: cover; 
-            object-position: center; 
+            object-position: top; /* Prioritize showing the top of the image */
         }
         .img-responsive { 
             transition: transform 0.3s ease; 
@@ -136,7 +137,7 @@
 
         /* Smaller text for Portfolio and Services headings */
         article h1 {
-            font-size: 24px; /* Reduced from default (likely 32px or larger) */
+            font-size: 24px;
             margin: 10px 0;
         }
 
@@ -147,22 +148,35 @@
             .callout h5 { font-size: 18px; }
             .callout h6 { font-size: 14px; }
             .col-sm-6 { width: 100%; }
-            .flexslider .slides img { height: 300px; }
+            .flexslider .slides img { 
+                height: 300px; /* Fixed height for mobile */
+                object-fit: cover;
+                object-position: top; /* Ensure top is visible */
+            }
             footer { padding: 20px 10px; }
             header { height: 60px; }
-            article h1 { font-size: 20px; } /* Smaller on mobile */
-        }
-
-        @media (min-width: 769px) {
-            article h1 { font-size: 28px; } /* Slightly larger on desktop */
+            article h1 { font-size: 20px; }
         }
 
         @media (max-width: 480px) {
             .header-title { font-size: 28px; }
             .callout h5 { font-size: 16px; }
             .callout h6 { font-size: 12px; }
-            .flexslider .slides img { height: 200px; }
-            article h1 { font-size: 18px; } /* Even smaller on very small screens */
+            .flexslider .slides img { 
+                height: 200px; /* Smaller height for very small screens */
+                object-fit: cover;
+                object-position: top;
+            }
+            article h1 { font-size: 18px; }
+        }
+
+        @media (min-width: 769px) {
+            .flexslider .slides img { 
+                height: 600px; /* Larger height for desktop */
+                object-fit: cover;
+                object-position: top;
+            }
+            article h1 { font-size: 28px; }
         }
     </style>
 
