@@ -115,6 +115,7 @@
         /* Portfolio Page Specific Styles */
         .portfolio-item { 
             text-align: center; 
+            position: relative; 
         }
         .portfolio-item img { 
             width: 100%; 
@@ -122,6 +123,7 @@
             max-height: 300px; 
             object-fit: cover; 
             transition: transform 0.3s ease; 
+            cursor: pointer; 
         }
         .portfolio-item img:hover { 
             transform: scale(1.05); 
@@ -134,6 +136,24 @@
             font-size: 14px; 
             color: #ccc; 
         }
+        /* Expanded Image Styles */
+        .expanded { 
+            position: fixed !important; 
+            top: 0 !important; 
+            left: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; 
+            max-height: none !important; 
+            z-index: 2000; 
+            background: rgba(0, 0, 0, 0.9); /* Dark overlay */
+            object-fit: contain; /* Maintain aspect ratio */
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .expanded + h3, .expanded + p { 
+            display: none; /* Hide text when expanded */
+        }
 
         /* Media Queries for Mobile Responsiveness */
         @media (max-width: 768px) {
@@ -145,6 +165,11 @@
             .portfolio-item img { max-height: 200px; } /* Reduced max-height for mobile */
             .portfolio-item h3 { font-size: 18px; }
             .portfolio-item p { font-size: 12px; }
+            .expanded { 
+                width: 100% !important; 
+                height: auto !important; 
+                max-height: 100vh; /* Full viewport height on mobile */
+            }
             header { height: 60px; }
         }
 
@@ -155,6 +180,7 @@
             .portfolio-item img { max-height: 150px; } /* Further reduced for very small screens */
             .portfolio-item h3 { font-size: 16px; }
             .portfolio-item p { font-size: 12px; }
+            .expanded { max-height: 100vh; } /* Ensure full height on very small screens */
         }
     </style>
 
@@ -188,6 +214,48 @@
 
             // Trigger scroll event on page load to ensure correct header state
             $(window).trigger('scroll');
+
+            // Image expansion functionality
+            let currentExpanded = null;
+
+            $('.portfolio-item img').on('click', function() {
+                // If there's a currently expanded image, revert it
+                if (currentExpanded && currentExpanded !== this) {
+                    $(currentExpanded).removeClass('expanded');
+                    $(currentExpanded).nextAll('h3').show(); // Show hidden text
+                    $(currentExpanded).nextAll('p').show(); // Show hidden text
+                }
+
+                // Toggle the clicked image
+                $(this).toggleClass('expanded');
+                if ($(this).hasClass('expanded')) {
+                    currentExpanded = this;
+                    $(this).nextAll('h3').hide(); // Hide text when expanded
+                    $(this).nextAll('p').hide(); // Hide text when expanded
+                } else {
+                    currentExpanded = null;
+                    $(this).nextAll('h3').show(); // Show text when collapsed
+                    $(this).nextAll('p').show(); // Show text when collapsed
+                }
+
+                // Prevent body scrolling when image is expanded
+                if ($(this).hasClass('expanded')) {
+                    $('body').css('overflow', 'hidden');
+                } else {
+                    $('body').css('overflow', 'auto');
+                }
+            });
+
+            // Close expanded image if clicked again or outside (optional)
+            $(document).on('click', function(e) {
+                if ($(e.target).hasClass('expanded')) {
+                    $(e.target).removeClass('expanded');
+                    $(e.target).nextAll('h3').show();
+                    $(e.target).nextAll('p').show();
+                    currentExpanded = null;
+                    $('body').css('overflow', 'auto');
+                }
+            });
         });
     </script>
 </head>
